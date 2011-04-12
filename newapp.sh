@@ -48,10 +48,11 @@ then
 	# Install Kostache
 	echo "Cloning zombor's Kostache into system..."
 	git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null
-	
 	mkdir application/templates
 fi
 
+# Ensure submodules initialised
+git submodule update --init
 
 # Commit changes
 echo "Commiting original sin...." 
