@@ -10,6 +10,11 @@
 echo "Please provide a path in which to install your new Kohana application: "
 read APP_NAME
 
+if [ ! -n "$APP_NAME" ];
+then
+	APP_NAME = ~/koapp
+fi
+
 # Create folder in application path and change into it
 echo "Creating application path..."
 mkdir -p $APP_NAME
