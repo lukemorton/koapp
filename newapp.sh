@@ -146,13 +146,13 @@ install_db()
 
 install_kostache
 install_orm
+install_db
 
 # Ensure submodules initialised
 echo "Initialising submodules..."
 git submodule update --init  > /dev/null
 
-# Commit changes
-echo "Commiting original sin...." 
+# Add changes
 git add . > /dev/null
 
 echo "Please provide a commit message or leave blank to use default: "
@@ -163,6 +163,7 @@ then
 	COMMIT="Kohana Application Installer run for $APP_NAME"
 fi
 
+echo "Commiting original sin...." 
 git commit -m "$COMMIT" > /dev/null
 
 echo "Done."
