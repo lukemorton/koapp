@@ -11,7 +11,7 @@
 #
 
 # Default
-DEFAULT_APP_PATH = "$HOME/koapp"
+DEFAULT_APP_PATH="$HOME/koapp"
 
 echo $DEFAULT_APP_PATH
 
@@ -22,9 +22,9 @@ read CUSTOM_APP_PATH
 # Set app path
 if [ -n "$CUSTOM_APP_PATH" ];
 then
-	APP_NAME = "$CUSTOM_APP_PATH"
+	APP_NAME="$CUSTOM_APP_PATH"
 else
-	APP_NAME = "$DEFAULT_APP_PATH"
+	APP_NAME="$DEFAULT_APP_PATH"
 fi
 
 # Using app name
