@@ -122,7 +122,7 @@ install_orm()
 		if [ "$ORM" == "y" ];
 		then
 			echo "Cloning Kohana's ORM module..."
-			git submodule add https://github.com/zombor/orm.git modules/orm > /dev/null 2>&1
+			git submodule add https://github.com/kohana/orm.git modules/orm > /dev/null 2>&1
 			install_db
 		fi
 	fi
@@ -163,6 +163,6 @@ then
 	COMMIT="Kohana Application Installer run for $APP_NAME"
 fi
 
-git commit -m $COMMIT > /dev/null
+git commit -m "$COMMIT" > /dev/null
 
 echo "Done."
