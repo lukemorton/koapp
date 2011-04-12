@@ -66,7 +66,7 @@ if [ "$KOSTACHE" == "y" ];
 then
 	# Install Kostache
 	echo "Cloning zombor's Kostache into system..."
-	git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null
+	git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null 2>&1
 	mkdir application/templates
 fi
 
