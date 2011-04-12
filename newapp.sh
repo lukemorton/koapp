@@ -101,9 +101,6 @@ install_module()
 	MODULE_NAME=$1
 	MODULE_LOCATION=$2
 	
-	echo $MODULE_NAME
-	echo $MODULE_LOCATION
-
 	if [ ! -d "modules/$MODULE_NAME" ];
 	then
 		echo "Would you like to install $MODULE_NAME (y/n)?"
@@ -122,7 +119,7 @@ install_module()
 install_kostache()
 {
 	echo "Installing Kostache..."
-	INSTALLED=`install_module "kostache" "https://github.com/zombor/KOstache.git`
+	INSTALLED=`install_module "kostache" "https://github.com/zombor/KOstache.git"`
 	if [ "$INSTALLED" -gt "0" ];
 	then
 		mkdir application/templates
@@ -135,7 +132,7 @@ install_kostache()
 
 install_orm()
 {
-	INSTALLED=`install_module "orm" "https://github.com/kohana/orm.git`
+	INSTALLED=`install_module "orm" "https://github.com/kohana/orm.git"`
 	if [ "$INSTALLED" -gt "0" ];
 	then
 		return install_db
@@ -146,7 +143,7 @@ install_orm()
 
 install_db()
 {
-	INSTALLED=`install_module "database" "https://github.com/kohana/database.git`
+	INSTALLED=`install_module "database" "https://github.com/kohana/database.git"`
 	if [ "$INSTALLED" -gt "0" ];
 	then
 		cp modules/database/config/database.php application/config/database.php
