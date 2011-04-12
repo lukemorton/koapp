@@ -14,8 +14,7 @@
 DEFAULT_APP_PATH = "$HOME/koapp"
 
 # Request application name
-echo "Please provide a path in which to install your new Kohana application: "
-read CUSTOM_APP_PATH
+read CUSTOM_APP_PATH -p "Please provide a path in which to install your new Kohana application: "
 
 # Set app path
 if [ -n "$CUSTOM_APP_PATH" ];
