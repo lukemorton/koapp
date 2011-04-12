@@ -11,10 +11,10 @@ echo "Please provide a path in which to install your new Kohana application: "
 read APP_NAME
 
 # FIXME
-#if [ ! -n "$APP_NAME" ];
-#then
-#	APP_NAME = ~/koapp
-#fi
+if [ ! -n "$APP_NAME" ];
+then
+	APP_NAME = $HOME/koapp
+fi
 
 # Create folder in application path and change into it
 echo "Creating application path..."
@@ -41,7 +41,7 @@ echo "Cloning Kohana Core into system..."
 git submodule add https://github.com/kohana/core.git system > /dev/null
 
 # Install Kostache?
-echo "Would you like to install Kostache?"
+echo "Would you like to install Kostache (y/n)?"
 read KOSTACHE
 
 if [ $KOSTACHE == 'y' ];
@@ -54,11 +54,11 @@ fi
 
 # Ensure submodules initialised
 echo "Initialising submodules..."
-git submodule update --init
+git submodule update --init  > /dev/null
 
 # Commit changes
 echo "Commiting original sin...." 
-git add . 
-git commit -m "My base Kohana setup for $APP_NAME"
+git add .  > /dev/null
+git commit -m "My base Kohana setup for $APP_NAME" > /dev/null
 
 echo "Done."
