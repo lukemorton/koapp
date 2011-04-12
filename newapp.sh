@@ -100,6 +100,9 @@ install_module()
 {
 	MODULE_NAME=$1
 	MODULE_LOCATION=$2
+	
+	echo $MODULE_NAME
+	echo $MODULE_LOCATION
 
 	if [ ! -d "modules/$MODULE_NAME" ];
 	then
@@ -118,6 +121,7 @@ install_module()
 
 install_kostache()
 {
+	echo "Installing Kostache..."
 	INSTALLED=`install_module "kostache" "https://github.com/zombor/KOstache.git`
 	if [ "$INSTALLED" -gt "0" ];
 	then
