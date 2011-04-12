@@ -1,9 +1,12 @@
-# Grab the Vitals.
+#
+# Grab the Vitals
+# ---------------
 #
 # You will need installed:
 #
-#    * git
-#    * apache ( + mod_php )
+#  * git
+#  * apache
+#  * php 5.2+
 #
 
 # Default
