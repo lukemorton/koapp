@@ -6,16 +6,23 @@
 #    * apache ( + mod_php )
 #
 
+# Default
+DEFAULT_APP_PATH = "$HOME/koapp"
+
 # Request application name
 echo "Please provide a path in which to install your new Kohana application: "
-read APP_NAME
+read CUSTOM_APP_PATH
 
-# FIXME
-if [ ! -n "$APP_NAME" ];
+# Set app path
+if [ -n "$CUSTOM_APP_PATH" ];
 then
-	APP_NAME = "$HOME/koapp/"
-	echo "Using $APP_NAME as path."
+	APP_NAME = "$CUSTOM_APP_PATH"
+else
+	APP_NAME = "$DEFAULT_APP_PATH"
 fi
+
+# Using app name
+echo "Using $APP_NAME as path."
 
 # Create folder in application path and change into it
 echo "Creating application path..."
