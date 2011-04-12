@@ -13,7 +13,7 @@ read APP_NAME
 # FIXME
 if [ ! -n "$APP_NAME" ];
 then
-	APP_NAME = $HOME/koapp
+	$APP_NAME = $HOME/koapp
 fi
 
 # Create folder in application path and change into it
@@ -44,7 +44,7 @@ git submodule add https://github.com/kohana/core.git system > /dev/null
 echo "Would you like to install Kostache (y/n)?"
 read KOSTACHE
 
-if [ $KOSTACHE == 'y' ];
+if [ "$KOSTACHE" == "y" ];
 then
 	# Install Kostache
 	echo "Cloning zombor's Kostache into system..."
