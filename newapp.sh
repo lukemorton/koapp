@@ -118,7 +118,7 @@ install_module()
 
 install_kostache()
 {
-	INSTALLED=install_module "kostache" "https://github.com/zombor/KOstache.git"
+	INSTALLED=`install_module "kostache" "https://github.com/zombor/KOstache.git`
 	if [ "$INSTALLED" -gt "0" ];
 	then
 		mkdir application/templates
@@ -131,7 +131,7 @@ install_kostache()
 
 install_orm()
 {
-	INSTALLED=install_module "orm" "https://github.com/kohana/orm.git"
+	INSTALLED=`install_module "orm" "https://github.com/kohana/orm.git`
 	if [ "$INSTALLED" -gt "0" ];
 	then
 		return install_db
@@ -142,7 +142,7 @@ install_orm()
 
 install_db()
 {
-	INSTALLED=install_module "database" "https://github.com/kohana/database.git"
+	INSTALLED=`install_module "database" "https://github.com/kohana/database.git`
 	if [ "$INSTALLED" -gt "0" ];
 	then
 		cp modules/database/config/database.php application/config/database.php
