@@ -46,7 +46,7 @@ read KOSTACHE
 if [ $KOSTACHE == 'y' ];
 then
 	# Install Kostache
-	echo "Cloning Kohana Core into system..."
+	echo "Cloning zombor's Kostache into system..."
 	git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null
 	
 	mkdir application/templates
