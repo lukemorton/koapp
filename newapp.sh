@@ -25,13 +25,17 @@ chmod 0777 application/cache application/logs
 echo "Initialising application folder as git repo..."
 git init > /dev/null
 
+# Grab bootstrap and index
+wget https://github.com/kohana/kohana/raw/3.1/master/application/bootstrap.php --output-file=application/bootstrap.php
+wget https://github.com/kohana/kohana/raw/3.1/master/index.php --output-file=application/public/index.php
+
 # Get system files
 echo "Cloning Kohana Core into system..."
 git submodule add https://github.com/kohana/core.git system > /dev/null
 
 # Commit changes
 echo "Commiting original sin...." 
-git add .  > /dev/null
-git commit -m "My base Kohana setup for $APP_NAME" > /dev/null
+git add . 
+git commit -m "My base Kohana setup for $APP_NAME"
 
 echo "Done."
