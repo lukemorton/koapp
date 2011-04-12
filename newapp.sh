@@ -46,8 +46,8 @@ cd $APP_NAME
 
 # Create application folders with correct perms
 echo "Creating application folders..."
-mkdir -f {application,modules}
-mkdir -f application/{classes,public,cache,logs}
+mkdir {application,modules}
+mkdir application/{classes,public,cache,logs}
 chmod 0777 application/cache application/logs
 
 # Init repo
