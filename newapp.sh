@@ -31,18 +31,23 @@ else
 	fi
 fi
 
-# Using app name
-echo "Using $APP_NAME as path."
+# Use app name
+echo "Using $APP_NAME as application path..."
 
-# Create folder in application path and change into it
-echo "Creating application path..."
-mkdir -p $APP_NAME
+if [ ! -d "$APP_NAME" ];
+then
+	# Create folder in application path
+	echo "Creating application path..."
+	mkdir -p $APP_NAME
+fi
+
+# Go go go...
 cd $APP_NAME
 
 # Create application folders with correct perms
 echo "Creating application folders..."
-mkdir {application,modules}
-mkdir application/{classes,public,cache,logs}
+mkdir -f {application,modules}
+mkdir -f application/{classes,public,cache,logs}
 chmod 0777 application/cache application/logs
 
 # Init repo
@@ -76,7 +81,7 @@ git submodule update --init  > /dev/null
 
 # Commit changes
 echo "Commiting original sin...." 
-git add .  > /dev/null
+git add . > /dev/null
 git commit -m "My base Kohana setup for $APP_NAME" > /dev/null
 
 echo "Done."
