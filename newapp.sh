@@ -52,7 +52,7 @@ wget https://github.com/kohana/kohana/raw/3.1/master/index.php --output-file=app
 
 # Get system files
 echo "Cloning Kohana Core into system..."
-git submodule add https://github.com/kohana/core.git system > /dev/null
+git submodule add https://github.com/kohana/core.git system > /dev/null 2>&1
 
 # Install Kostache?
 echo "Would you like to install Kostache (y/n)?"
