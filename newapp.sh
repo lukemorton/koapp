@@ -1,14 +1,28 @@
 #!/bin/bash
 #
-# Grab the Vitals
-# ---------------
+# Kohana Application Installer
+# ----------------------------
+# 
+# This is a small bash script for installing the core files for
+# a Kohana application. Will install at the path specified a
+# basic application structure, then initialises a git repository
+# for your convenience. The core Kohana system files are added
+# as a submodule and you are given the option to install
+# Kostache because you just should!
 #
-# You will need installed:
+# Requirements:
+# 
+#    * git
 #
-#  * git
-#  * apache
-#  * php 5.2+
-#
+# Usage:
+#   	
+#     sh koapp.sh /var/www/my-new-app
+#     git submodule add https://github.com/kohana/database.git modules/database
+#     git submodule add https://github.com/kohana/orm.git modules/orm
+#     git submodule add https://github.com/kohana/userguide.git modules/userguide
+#     git add .
+#     git commit -m "Added database, orm and userguide modules"
+# 
 
 # Default
 DEFAULT_APP_PATH="$HOME/koapp"
@@ -46,33 +60,55 @@ cd $APP_NAME
 
 # Create application folders with correct perms
 echo "Creating application folders..."
-mkdir {application,modules}
-mkdir application/{classes,public,cache,logs}
-chmod 0777 application/cache application/logs
+mkdir -p {application,modules}
+mkdir -p application/{classes,public,cache,logs}
 
-# Init repo
-echo "Initialising application folder as git repo..."
-git init > /dev/null
+echo "Ensuring 777 permissions on application/log and application/cache..."
+chmod 0777 application/{cache,logs}
 
-# Grab bootstrap and index
-echo "Getting bootstrap.php and index.php..."
-wget https://github.com/kohana/kohana/raw/3.1/master/application/bootstrap.php --output-file=application/bootstrap.php
-wget https://github.com/kohana/kohana/raw/3.1/master/index.php --output-file=application/public/index.php
-
-# Get system files
-echo "Cloning Kohana Core into system..."
-git submodule add https://github.com/kohana/core.git system > /dev/null 2>&1
-
-# Install Kostache?
-echo "Would you like to install Kostache (y/n)?"
-read KOSTACHE
-
-if [ "$KOSTACHE" == "y" ];
+if [ -d ".git" ];
 then
-	# Install Kostache
-	echo "Cloning zombor's Kostache into system..."
-	git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null 2>&1
-	mkdir application/templates
+	# Already a git repo
+	echo "Application path is already a git repo..."
+else
+	# Init repo
+	echo "Initialising application folder as git repo..."
+	git init > /dev/null
+fi
+
+if [ ! -f "application/bootstrap.php" ];
+then
+	# Grab bootstrap and index
+	echo "Getting bootstrap.php..."
+	wget https://github.com/kohana/kohana/raw/3.1/master/application/bootstrap.php --output-file=application/bootstrap.php
+fi
+
+if [ ! -f "application/public/index.php" ];
+then
+	echo "Getting index.php..."
+	wget https://github.com/kohana/kohana/raw/3.1/master/index.php --output-file=application/public/index.php
+fi
+
+if [ ! -d "system" ];
+then
+	# Get system files
+	echo "Cloning Kohana Core into system..."
+	git submodule add https://github.com/kohana/core.git system > /dev/null 2>&1
+fi
+
+if [ ! -d "modules/kostache" ];
+then
+	# Install Kostache?
+	echo "Would you like to install Kostache (y/n)?"
+	read KOSTACHE
+
+	if [ "$KOSTACHE" == "y" ];
+	then
+		# Install Kostache
+		echo "Cloning zombor's Kostache into system..."
+		git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null 2>&1
+		mkdir application/templates
+	fi
 fi
 
 # Ensure submodules initialised
@@ -82,6 +118,6 @@ git submodule update --init  > /dev/null
 # Commit changes
 echo "Commiting original sin...." 
 git add . > /dev/null
-git commit -m "My base Kohana setup for $APP_NAME" > /dev/null
+git commit -m "Kohana Application Installer run for $APP_NAME" > /dev/null
 
 echo "Done."
