@@ -13,7 +13,8 @@ read APP_NAME
 # FIXME
 if [ ! -n "$APP_NAME" ];
 then
-	$APP_NAME = $HOME/koapp
+	$APP_NAME = $HOME/koapp/
+	echo "Using $APP_NAME as path."
 fi
 
 # Create folder in application path and change into it
