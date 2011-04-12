@@ -96,54 +96,59 @@ then
 	git submodule add https://github.com/kohana/core.git system > /dev/null 2>&1
 fi
 
-install_kostache()
+install_module()
 {
-	if [ ! -d "modules/kostache" ];
-	then
-		echo "Would you like to install Kostache (y/n)?"
-		read KOSTACHE
+	MODULE_NAME=$1
+	MODULE_LOCATION=$2
 
-		if [ "$KOSTACHE" == "y" ];
+	if [ ! -d "modules/$MODULE_NAME" ];
+	then
+		echo "Would you like to install $MODULE_NAME (y/n)?"
+		read INSTALL
+
+		if [ "$INSTALL" == "y" ];
 		then
-			echo "Cloning zombor's Kostache into system..."
-			git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null 2>&1
-			mkdir application/templates
+			echo "Cloning $MODULE_NAME from $MODULE_LOCATION into modules/$MODULE_NAME..."
+			git submodule add "$MODULE_LOCATION" "modules/$MODULE_NAME" > /dev/null 2>&1
+			return 1
 		fi
 	fi
+	return 0
 }
+
+install_kostache()
+{
+	if [ install_module "kostache" "https://github.com/zombor/KOstache.git" -gt "0" ];
+	then
+		mkdir application/templates
+		return 1
+	fi
+	
+	return 0
+}
+
 
 install_orm()
 {
-	if [ ! -d "modules/orm" ];
+	if [ install_module "orm" "https://github.com/kohana/orm.git" -gt "0" ];
 	then
-		echo "Would you like to install Kohana ORM module (y/n)?"
-		read ORM
-
-		if [ "$ORM" == "y" ];
-		then
-			echo "Cloning Kohana's ORM module..."
-			git submodule add https://github.com/kohana/orm.git modules/orm > /dev/null 2>&1
-			install_db
-		fi
+		return install_db
 	fi
+	
+	return 0
 }
 
 install_db()
 {
-	if [ ! -d "modules/database" ];
+	if [ install_module "database" "https://github.com/kohana/database.git" -gt "0" ];
 	then
-		echo "Would you like to install Kohana Database module (y/n)?"
-		read DB
-
-		if [ "$DB" == "y" ];
-		then
-			echo "Cloning Kohana's database module..."
-			git submodule add https://github.com/kohana/database.git modules/database > /dev/null 2>&1
-			cp modules/database/config/database.php application/config/database.php
-		fi
+		cp modules/database/config/database.php application/config/database.php
+		return 1
 	fi
+	
+	return 0
 }
-
+	
 install_kostache
 install_orm
 install_db
