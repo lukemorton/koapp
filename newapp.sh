@@ -123,7 +123,7 @@ install_orm()
 		then
 			echo "Cloning Kohana's ORM module..."
 			git submodule add https://github.com/zombor/orm.git modules/orm > /dev/null 2>&1
-			install_db()
+			install_db
 		fi
 	fi
 }
