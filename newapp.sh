@@ -118,7 +118,7 @@ install_module()
 
 install_kostache()
 {
-	if [ install_module "kostache" "https://github.com/zombor/KOstache.git" -gt "0" ];
+	if [ $(install_module "kostache" "https://github.com/zombor/KOstache.git") -gt "0" ];
 	then
 		mkdir application/templates
 		return 1
@@ -130,7 +130,7 @@ install_kostache()
 
 install_orm()
 {
-	if [ install_module "orm" "https://github.com/kohana/orm.git" -gt "0" ];
+	if [ $(install_module "orm" "https://github.com/kohana/orm.git") -gt "0" ];
 	then
 		return install_db
 	fi
@@ -140,7 +140,7 @@ install_orm()
 
 install_db()
 {
-	if [ install_module "database" "https://github.com/kohana/database.git" -gt "0" ];
+	if [ $(install_module "database" "https://github.com/kohana/database.git") -gt "0" ];
 	then
 		cp modules/database/config/database.php application/config/database.php
 		return 1
