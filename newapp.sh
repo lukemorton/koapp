@@ -61,7 +61,7 @@ cd $APP_NAME
 # Create application folders with correct perms
 echo "Creating application folders..."
 mkdir -p {application,modules}
-mkdir -p application/{classes,public,cache,logs}
+mkdir -p application/{config,classes,public,cache,logs}
 
 echo "Ensuring 777 permissions on application/log and application/cache..."
 chmod 0777 application/{cache,logs}
@@ -96,20 +96,56 @@ then
 	git submodule add https://github.com/kohana/core.git system > /dev/null 2>&1
 fi
 
-if [ ! -d "modules/kostache" ];
-then
-	# Install Kostache?
-	echo "Would you like to install Kostache (y/n)?"
-	read KOSTACHE
-
-	if [ "$KOSTACHE" == "y" ];
+install_kostache()
+{
+	if [ ! -d "modules/kostache" ];
 	then
-		# Install Kostache
-		echo "Cloning zombor's Kostache into system..."
-		git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null 2>&1
-		mkdir application/templates
+		echo "Would you like to install Kostache (y/n)?"
+		read KOSTACHE
+
+		if [ "$KOSTACHE" == "y" ];
+		then
+			echo "Cloning zombor's Kostache into system..."
+			git submodule add https://github.com/zombor/KOstache.git modules/kostache > /dev/null 2>&1
+			mkdir application/templates
+		fi
 	fi
-fi
+}
+
+install_orm()
+{
+	if [ ! -d "modules/orm" ];
+	then
+		echo "Would you like to install Kohana ORM module (y/n)?"
+		read ORM
+
+		if [ "$ORM" == "y" ];
+		then
+			echo "Cloning Kohana's ORM module..."
+			git submodule add https://github.com/zombor/orm.git modules/orm > /dev/null 2>&1
+			install_db()
+		fi
+	fi
+}
+
+install_db()
+{
+	if [ ! -d "modules/database" ];
+	then
+		echo "Would you like to install Kohana Database module (y/n)?"
+		read DB
+
+		if [ "$DB" == "y" ];
+		then
+			echo "Cloning Kohana's database module..."
+			git submodule add https://github.com/kohana/database.git modules/database > /dev/null 2>&1
+			cp modules/database/config/database.php application/config/database.php
+		fi
+	fi
+}
+
+install_kostache
+install_orm
 
 # Ensure submodules initialised
 echo "Initialising submodules..."
@@ -118,6 +154,15 @@ git submodule update --init  > /dev/null
 # Commit changes
 echo "Commiting original sin...." 
 git add . > /dev/null
-git commit -m "Kohana Application Installer run for $APP_NAME" > /dev/null
+
+echo "Please provide a commit message or leave blank to use default: "
+read COMMIT
+
+if [ ! -n "$COMMIT" ];
+then
+	COMMIT="Kohana Application Installer run for $APP_NAME"
+fi
+
+git commit -m $COMMIT > /dev/null
 
 echo "Done."
