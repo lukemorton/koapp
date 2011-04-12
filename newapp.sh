@@ -52,6 +52,7 @@ then
 fi
 
 # Ensure submodules initialised
+echo "Initialising submodules..."
 git submodule update --init
 
 # Commit changes
