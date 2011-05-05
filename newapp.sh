@@ -80,13 +80,13 @@ if [ ! -f "application/bootstrap.php" ];
 then
 	# Grab bootstrap and index
 	echo "Getting bootstrap.php..."
-	wget https://github.com/kohana/kohana/raw/3.1/master/application/bootstrap.php --output-file=application/bootstrap.php
+	wget https://github.com/kohana/kohana/raw/3.1/master/application/bootstrap.php --output-file=application/bootstrap.php --no-check-certificate
 fi
 
 if [ ! -f "public/index.php" ];
 then
 	echo "Getting index.php..."
-	wget https://github.com/kohana/kohana/raw/3.1/master/index.php --output-file=public/index.php
+	wget https://github.com/kohana/kohana/raw/3.1/master/index.php --output-file=public/index.php --no-check-certificate
 fi
 
 if [ ! -d "system" ];
