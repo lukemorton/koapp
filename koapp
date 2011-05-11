@@ -87,7 +87,7 @@ fi
 if [ ! -f "public/index.php" ];
 then
 	echo "Getting index.php..."
-	wget https://github.com/kohana/kohana/raw/3.1/master/index.php --output-document=public/index.php --no-check-certificate > /dev/null 2>&1
+	wget https://gist.github.com/raw/916077/d8a65e6400a5f12b0db7c1fd45d584f3d7c391bd/index.php --output-document=public/index.php --no-check-certificate > /dev/null 2>&1
 fi
 
 if [ ! -d "system" ];
