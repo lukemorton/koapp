@@ -49,22 +49,20 @@ set_app_path()
 	fi
 	
 	# Use app name
-	echo "Using $APP_NAME as application path..."
+	echo "Using $app_path as application path..."
 }
 
 
 create_app_path()
 {
-	if [ ! -d "$1" ];
+	if [ ! -d "$app_path" ];
 	then
 		# Create folder in application path
 		echo "Creating application path..."
-		mkdir -p $1
+		mkdir -p $app_path
 	fi
 }
 
-# Go go go...
-cd $APP_NAME
 
 create_folder_structure()
 {
@@ -195,8 +193,10 @@ commit_git()
 
 install()
 {
+	echo $1
 	set_app_path $1
 	create_app_path
+	cd $1
 	create_folder_structure
 	install_bootstrap
 	install_index
@@ -206,12 +206,13 @@ install()
 	install_orm
 	install_db
 	update_submodules
-	
+	commit_git
+
 	echo ""
 	echo "Installed."
 }
 
 if [ "$1" ];
 then
-	$1
+	$1 $2
 fi
