@@ -122,9 +122,9 @@ install_module()
 	if [ ! -d "modules/$1" ];
 	then
 		echo "Would you like to install $1 (y/n)?"
-		read INSTALL
+		read install
 
-		if [ "$INSTALL" == "y" ];
+		if [ "$install" == "y" ];
 		then
 			echo "Installing $1..."
 			echo "Cloning $1 from $2 into modules/$1..."
@@ -137,7 +137,7 @@ install_kostache()
 {
 	install_module kostache https://github.com/zombor/KOstache.git
 
-	if [ "$INSTALL" == "y" ];
+	if [ "$install" == "y" ];
 	then
 		mkdir application/templates
 	fi
@@ -148,7 +148,7 @@ install_orm()
 {
 	install_module orm https://github.com/kohana/orm.git
 
-	if [ "$INSTALL" == "y" ];
+	if [ "$install" == "y" ];
 	then
 		echo ""
 		echo "[!!] You will need the database module in order to use ORM"
@@ -161,7 +161,7 @@ install_db()
 {
 	install_module database https://github.com/kohana/database.git
 
-	if [ "$INSTALL" == "y" ];
+	if [ "$install" == "y" ];
 	then
 		cp modules/database/config/database.php application/config/database.php
 	fi
@@ -180,15 +180,15 @@ commit_git()
 	git add . > /dev/null
 
 	echo "Please provide a commit message or leave blank to use default: "
-	read COMMIT
+	read commit
 
-	if [ ! -n "$COMMIT" ];
+	if [ ! -n "$commit" ];
 	then
-		COMMIT="Kohana Application Installer run for $APP_NAME"
+		commit="Kohana Application Installer run for $app_path"
 	fi
 
 	echo "Commiting original sin...." 
-	git commit -m "$COMMIT" > /dev/null
+	git commit -m "$commit" > /dev/null
 }
 
 install()
