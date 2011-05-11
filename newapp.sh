@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Kohana Application Installer
-# ----------------------------
+# ============================
 # 
 # This is a small bash script for installing the core files for
 # a Kohana application. Will install at the path specified a
@@ -10,14 +10,16 @@
 # as a submodule and you are given the option to install
 # Kostache because you just should!
 #
-# Author: Luke Morton <lukemorton.designs@gmail.com>
+# Author
+# ------
+# Luke Morton <lukemorton.designs@gmail.com>
 #
-# Requirements:
-# 
-#    * git
+# Requirements
+# ------------
+#  * git
 #
-# Usage:
-#   	
+# Usage
+# -----	
 #     sh koapp.sh /var/www/my-new-app
 #     git submodule add https://github.com/kohana/database.git modules/database
 #     git submodule add https://github.com/kohana/orm.git modules/orm
