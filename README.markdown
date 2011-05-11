@@ -1,5 +1,12 @@
 # koapp
 
-Please await further instruction, I'm still playing myself.
+```shell
+./koapp install /var/www/new-app```
 
-Luke
+## Author
+
+Luke Morton, Copyright 2011.
+
+## License
+
+MIT
