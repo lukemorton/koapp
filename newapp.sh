@@ -3,12 +3,11 @@
 # Kohana Application Installer
 # ============================
 # 
-# This is a small bash script for installing the core files for
-# a Kohana application. Will install at the path specified a
-# basic application structure, then initialises a git repository
-# for your convenience. The core Kohana system files are added
-# as a submodule and you are given the option to install
-# Kostache because you just should!
+# This is a small bash script for installing the core files for a Kohana
+# application. Will install at the path specified a basic application
+# structure, then initialises a git repository for your convenience. The
+# core Kohana system files are added as a submodule and you are given
+# the option to install Kostache because you just should!
 #
 #
 # Author
