@@ -1,7 +1,8 @@
 # koapp
 
 ```shell
-./koapp install /var/www/new-app```
+./koapp install /var/www/new-app
+```
 
 ## Author
 
