@@ -22,7 +22,7 @@
 #
 # Usage
 # -----	
-#     ./koapp /var/www/my-new-app
+#     ./koapp install /var/www/my-new-app
 # 
 
 # Default
