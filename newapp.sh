@@ -10,6 +10,8 @@
 # as a submodule and you are given the option to install
 # Kostache because you just should!
 #
+# Author: Luke Morton <lukemorton.designs@gmail.com>
+#
 # Requirements:
 # 
 #    * git
