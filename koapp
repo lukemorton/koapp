@@ -28,97 +28,116 @@
 # Default
 DEFAULT_APP_PATH="$HOME/koapp"
 
-if [ -n  "$1" ];
-then
-	# Use first arg as application path
-	APP_NAME="$1"
-else
-	# Request application name
-	echo "Please provide a path in which to install your new Kohana application: "
-	read CUSTOM_APP_PATH
-
-	# Set app path
-	if [ -n "$CUSTOM_APP_PATH" ];
+set_app_path()
+{
+	if [ -n  "$1" ];
 	then
-		APP_NAME="$CUSTOM_APP_PATH"
+		# Use first arg as application path
+		app_path="$1"
 	else
-		APP_NAME="$DEFAULT_APP_PATH"
+		# Request application name
+		echo "Please provide a path in which to install your new Kohana application: "
+		read custom_app_path
+
+		# Set app path
+		if [ -n "$custom_app_path" ];
+		then
+			app_path="$custom_app_path"
+		else
+			app_path="$DEFAULT_APP_PATH"
+		fi
 	fi
-fi
+	
+	# Use app name
+	echo "Using $APP_NAME as application path..."
+}
 
-# Use app name
-echo "Using $APP_NAME as application path..."
 
-if [ ! -d "$APP_NAME" ];
-then
-	# Create folder in application path
-	echo "Creating application path..."
-	mkdir -p $APP_NAME
-fi
+create_app_path()
+{
+	if [ ! -d "$1" ];
+	then
+		# Create folder in application path
+		echo "Creating application path..."
+		mkdir -p $1
+	fi
+}
 
 # Go go go...
 cd $APP_NAME
 
-# Create application folders with correct perms
-echo "Creating application folders..."
-mkdir -p {application,modules,public}
-mkdir -p application/{config,classes,cache,logs}
+create_folder_structure()
+{
+	# Create application folders with correct perms
+	echo "Creating application folders..."
+	mkdir -p {application,modules,public}
+	mkdir -p application/{config,classes,cache,logs}
 
-echo "Ensuring 777 permissions on application/log and application/cache..."
-chmod 0777 application/{cache,logs}
+	echo "Ensuring 777 permissions on application/log and application/cache..."
+	chmod 0777 application/{cache,logs}
+}
 
-if [ -d ".git" ];
-then
-	# Already a git repo
-	echo "Application path is already a git repo..."
-else
-	# Init repo
-	echo "Initialising application folder as git repo..."
-	git init > /dev/null
-fi
+init_git()
+{
+	if [ -d ".git" ];
+	then
+		# Already a git repo
+		echo "Application path is already a git repo..."
+	else
+		# Init repo
+		echo "Initialising application folder as git repo..."
+		git init > /dev/null
+	fi
+}
 
-if [ ! -f "application/bootstrap.php" ];
-then
-	# Grab bootstrap and index
-	echo "Getting bootstrap.php..."
-	wget https://github.com/kohana/kohana/raw/3.1/master/application/bootstrap.php --output-document=application/bootstrap.php --no-check-certificate > /dev/null 2>&1
-fi
+install_bootstrap()
+{
+	if [ ! -f "application/bootstrap.php" ];
+	then
+		# Grab bootstrap and index
+		echo "Getting bootstrap.php..."
+		wget https://github.com/kohana/kohana/raw/3.1/master/application/bootstrap.php --output-document=application/bootstrap.php --no-check-certificate > /dev/null 2>&1
+	fi
+}
 
-if [ ! -f "public/index.php" ];
-then
-	echo "Getting index.php..."
-	wget https://gist.github.com/raw/916077/d8a65e6400a5f12b0db7c1fd45d584f3d7c391bd/index.php --output-document=public/index.php --no-check-certificate > /dev/null 2>&1
-fi
+install_index()
+{
+	if [ ! -f "public/index.php" ];
+	then
+		echo "Getting index.php..."
+		wget https://gist.github.com/raw/916077/d8a65e6400a5f12b0db7c1fd45d584f3d7c391bd/index.php --output-document=public/index.php --no-check-certificate > /dev/null 2>&1
+	fi
+}
 
-if [ ! -d "system" ];
-then
-	# Get system files
-	echo "Cloning Kohana Core into system..."
-	git submodule add https://github.com/kohana/core.git system > /dev/null 2>&1
-fi
+install_system()
+{
+	if [ ! -d "system" ];
+	then
+		# Get system files
+		echo "Cloning Kohana Core into system..."
+		git submodule add https://github.com/kohana/core.git system > /dev/null 2>&1
+	fi
+}
 
 install_module()
 {
-	MODULE_NAME=$1
-	MODULE_LOCATION=$2
-	
-	if [ ! -d "modules/$MODULE_NAME" ];
+	if [ ! -d "modules/$1" ];
 	then
-		echo "Would you like to install $MODULE_NAME (y/n)?"
+		echo "Would you like to install $1 (y/n)?"
 		read INSTALL
 
 		if [ "$INSTALL" == "y" ];
 		then
-			echo "Installing $MODULE_NAME..."
-			echo "Cloning $MODULE_NAME from $MODULE_LOCATION into modules/$MODULE_NAME..."
-			git submodule add "$MODULE_LOCATION" "modules/$MODULE_NAME" > /dev/null 2>&1
+			echo "Installing $1..."
+			echo "Cloning $1 from $2 into modules/$1..."
+			git submodule add "$2" "modules/$1" > /dev/null 2>&1
 		fi
 	fi
 }
 
 install_kostache()
 {
-	install_module "kostache" "https://github.com/zombor/KOstache.git"
+	install_module kostache https://github.com/zombor/KOstache.git
 
 	if [ "$INSTALL" == "y" ];
 	then
@@ -129,18 +148,20 @@ install_kostache()
 
 install_orm()
 {
-	install_module "orm" "https://github.com/kohana/orm.git"
+	install_module orm https://github.com/kohana/orm.git
 
 	if [ "$INSTALL" == "y" ];
 	then
+		echo ""
 		echo "[!!] You will need the database module in order to use ORM"
+		echo ""
 		install_db
 	fi
 }
 
 install_db()
 {
-	install_module "database" "https://github.com/kohana/database.git"
+	install_module database https://github.com/kohana/database.git
 
 	if [ "$INSTALL" == "y" ];
 	then
@@ -148,26 +169,49 @@ install_db()
 	fi
 }
 
-install_kostache
-install_orm
-install_db
+update_submodules()
+{
+	# Ensure submodules initialised
+	echo "Initialising submodules..."
+	git submodule update --init  > /dev/null
+}
 
-# Ensure submodules initialised
-echo "Initialising submodules..."
-git submodule update --init  > /dev/null
+commit_git()
+{
+	# Add changes
+	git add . > /dev/null
 
-# Add changes
-git add . > /dev/null
+	echo "Please provide a commit message or leave blank to use default: "
+	read COMMIT
 
-echo "Please provide a commit message or leave blank to use default: "
-read COMMIT
+	if [ ! -n "$COMMIT" ];
+	then
+		COMMIT="Kohana Application Installer run for $APP_NAME"
+	fi
 
-if [ ! -n "$COMMIT" ];
+	echo "Commiting original sin...." 
+	git commit -m "$COMMIT" > /dev/null
+}
+
+install()
+{
+	set_app_path $1
+	create_app_path
+	create_folder_structure
+	install_bootstrap
+	install_index
+	init_git
+	install_system
+	install_kostache
+	install_orm
+	install_db
+	update_submodules
+	
+	echo ""
+	echo "Installed."
+}
+
+if [ "$1" ];
 then
-	COMMIT="Kohana Application Installer run for $APP_NAME"
+	$1
 fi
-
-echo "Commiting original sin...." 
-git commit -m "$COMMIT" > /dev/null
-
-echo "Done."
