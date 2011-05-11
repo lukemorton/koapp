@@ -22,12 +22,7 @@
 #
 # Usage
 # -----	
-#     sh koapp.sh /var/www/my-new-app
-#     git submodule add https://github.com/kohana/database.git modules/database
-#     git submodule add https://github.com/kohana/orm.git modules/orm
-#     git submodule add https://github.com/kohana/userguide.git modules/userguide
-#     git add .
-#     git commit -m "Added database, orm and userguide modules"
+#     ./koapp /var/www/my-new-app
 # 
 
 # Default
