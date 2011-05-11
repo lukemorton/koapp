@@ -105,7 +105,7 @@ install_index()
 	if [ ! -f "public/index.php" ];
 	then
 		echo "Getting index.php..."
-		wget https://gist.github.com/raw/916077/d8a65e6400a5f12b0db7c1fd45d584f3d7c391bd/index.php --output-document=public/index.php --no-check-certificate > /dev/null 2>&1
+		wget https://github.com/DrPheltRight/koapp/raw/develop/resources/index.php --output-document=public/index.php --no-check-certificate > /dev/null 2>&1
 	fi
 }
 
